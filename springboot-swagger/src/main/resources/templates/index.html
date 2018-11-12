@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+</head>
+<body>
+    <h1>hello world</h1>
+    <button name="time" onclick="request()" value="time">发送</button>
+    <br/>
+    <button name="sendUrl" onclick="sendURLInfo(date)" >确认</button>
+    <script>
+        var date = new Array();
+        function request() {
+
+            $.ajax({
+                url: "/v2/api-docs",
+                type: "get",
+                success: function (data) {
+                    var path = data.paths;
+                    var data = new Array();
+                    var i = 0;
+                    for (var o in path) {
+                        var info = new Object();
+                        console.log(o);
+                        info.url = o;
+                        // console.log(path[o]);
+                        var b = path[o];
+                        // console.log(b);
+                        for (var temp in b) {
+                            console.log(temp);
+                            info.type = temp;
+                            console.log(b[temp].summary);
+                            info.summary = b[temp].summary;
+                            console.log(b[temp].tags[0]);
+                            info.location = b[temp].tags[0];
+                        }
+                        data[i] = info;
+                        i++;
+
+                    }
+                    date = data;
+                    console.log(date)
+                }
+
+            });
+
+            // console.log(date);
+
+        }
+
+        function sendURLInfo(data) {
+            console.log(data);
+            console.log(JSON.stringify(data));
+            $.ajax({
+                url: "urlSave",
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            })
+        }
+    </script>
+</body>
+</html>
