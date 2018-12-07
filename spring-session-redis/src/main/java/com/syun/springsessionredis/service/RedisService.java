@@ -8,6 +8,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +22,9 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("unchecked")
 public class RedisService {
 
-    @Autowired
+
+
+    @Resource(name="StringRedisTemplate")
     private RedisTemplate redisTemplate;
 
 
@@ -46,6 +49,7 @@ public class RedisService {
         list.add("is ");
         list.add("lists");
         redisTemplate.opsForList().rightPushAll("list1",list);
+        System.out.println(redisTemplate.opsForValue().get("10"));
         System.out.println(redisTemplate.opsForList().range("list1", 0, 10));
     }
 
@@ -114,6 +118,15 @@ public class RedisService {
         zops.incrementScore("time", "a", 2);
         System.out.println(zops.reverseRange("time", 0, 10));
     }
+
+    public void setnxTest(String id){
+//        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        boolean flag = redisTemplate.opsForValue().setIfAbsent(id, "", 100L, TimeUnit.SECONDS);
+        System.out.println("flag: " + flag);
+    }
+
+
+
 
 
 

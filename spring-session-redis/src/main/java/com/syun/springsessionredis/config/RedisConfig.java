@@ -1,7 +1,5 @@
 package com.syun.springsessionredis.config;
 
-import com.sun.org.apache.regexp.internal.RE;
-import com.syun.springsessionredis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisConfig  {
 
+    @Autowired
+    private RedisTemplate redisTemplate;
 
+
+    @Bean("StringRedisTemplate")
+    public RedisTemplate redisTemplate(){
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        return redisTemplate;
+    }
 
 
 }
