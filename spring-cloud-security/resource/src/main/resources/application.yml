@@ -1,0 +1,19 @@
+server:
+  port: 9070
+spring:
+  application:
+    name: resource
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+security:
+  oauth2:
+    resource:
+      user-info-uri:  http://localhost:9060/user
+      prefer-token-info: false
