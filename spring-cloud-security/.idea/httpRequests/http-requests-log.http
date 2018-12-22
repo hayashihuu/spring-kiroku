@@ -1,3 +1,7 @@
+GET http://localhost:9060/{GET%20/user/{id}}
+
+###
+
 GET http://localhost:9060/{%20/user}
 
 ###

@@ -1,5 +1,8 @@
 package com.syun.auth.config;
 
+import com.syun.auth.filter.BaseUserAutheniticationFilter;
+import com.syun.auth.handler.LoginAuthSuccessHandler;
+import com.syun.auth.provider.BasicUserDetailServiceProvider;
 import com.syun.auth.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,12 +14,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @description:
@@ -33,21 +34,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private BasicUserDetailServiceProvider basicUserDetailServiceProvider;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
+
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
+//    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(basicUserDetailServiceProvider);
     }
 
     @Override
@@ -55,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().fullyAuthenticated()
-                .antMatchers("/oauth/token","/oauth/authorize","/testPost").permitAll()
+                .antMatchers("/oauth/token", "/oauth/authorize").permitAll()
                 .and()
                 .csrf().disable();
     }
@@ -64,6 +75,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/plugins/**", "/favicon.ico");
     }
+
+
+
+
+
+//
+//    @Bean
+//    public BaseUserAutheniticationFilter baseUserAutheniticationFilter(){
+//        BaseUserAutheniticationFilter filter = new BaseUserAutheniticationFilter();
+//
+//        try {
+//            filter.setAuthenticationManager(this.authenticationManagerBean());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        filter.setAuthenticationSuccessHandler(new LoginAuthSuccessHandler());
+//        filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler());
+//        return filter;
+//    }
 
     
 

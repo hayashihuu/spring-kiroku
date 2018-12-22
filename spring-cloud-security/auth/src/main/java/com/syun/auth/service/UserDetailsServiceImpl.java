@@ -1,7 +1,9 @@
 package com.syun.auth.service;
 
+import com.syun.auth.model.UserDO;
 import com.syun.auth.model.UserK;
-import javafx.beans.property.SimpleSetProperty;
+import com.syun.auth.feign.IamFeignService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,10 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,29 +28,17 @@ import java.util.Set;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
+    private IamFeignService iamFeignService;
+
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
+        loadUserByPassword(s);
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-
         System.out.println(request.getHeaderNames());
-        Enumeration<String> iterable = request.getHeaderNames();
-        System.out.println("headers:");
-        while (iterable.hasMoreElements()) {
-            String temp = iterable.nextElement();
-            System.out.println(temp + ":  " + request.getHeader(temp));
-
-        }
-
-        System.out.println("params: ");
-        Enumeration<String> params = request.getParameterNames();
-        while (params.hasMoreElements()) {
-            String temp = params.nextElement();
-            System.out.println(temp + ":  " + request.getParameter(temp));
-        }
-
-        HttpServletResponse response = requestAttributes.getResponse();
 
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
@@ -59,6 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonExpired = true; // 过期性 :true:没过期 false:过期
         boolean credentialsNonExpired = true; // 有效性 :true:凭证有效 false:凭证无效
         boolean accountNonLocked = true; // 锁定性 :true:未锁定 false:已锁定
+
 
         UserK userK = new UserK();
         userK.setUsername("syun");
@@ -69,12 +57,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 e.printStackTrace();
             }
         }
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + "");
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + "test");
+
         Set<GrantedAuthority> set = new HashSet<>();
         set.add(grantedAuthority);
+        set.add(new SimpleGrantedAuthority("ROLE_" + "syun"));
         userK.setAuthorities(set);
         userK.setPassword(new BCryptPasswordEncoder().encode("syun"));
         User user = new User(userK.getUsername(), userK.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, set);
         return user;
+    }
+
+
+    public UserDO loadUserByPassword(String username) {
+
+        UserDO userDO = iamFeignService.getUserById(1);
+
+        System.out.println(userDO.toString());
+
+        return userDO;
     }
 }
