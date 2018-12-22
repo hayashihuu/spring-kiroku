@@ -3,14 +3,7 @@ server:
 spring:
   application:
     name: auth
-  redis:
-    host: 112.74.57.253
-    port: 6379
-    password: syunredis
-  datasource:
-    url: jdbc:mysql://112.74.57.253:3306/auth
-    username: root
-    password: 594682797
+  
 eureka:
   instance:
     prefer-ip-address: true
