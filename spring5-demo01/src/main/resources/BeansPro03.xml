@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <!--基于 byName 自动装配-->
+    <!-- Definition for textEditor bean -->
+    <bean id="textEditor" class="com.syun.pro03.TextEditor"
+          autowire="byName">
+        <property name="name" value="Generic Text Editor" />
+    </bean>
+
+    <!-- Definition for spellChecker bean -->
+    <bean id="spellChecker" class="com.syun.pro03.SpellChecker">
+
+    </bean>
+
+
+    <!--基于构造器自动装配-->
+    <!-- Definition for textEditor bean -->
+    <!--<bean id="textEditor02" class="com.syun.pro03.TextEditor"-->
+          <!--autowire="constructor">-->
+        <!--<constructor-arg value="Generic Text Editor"/>-->
+    <!--</bean>-->
+
+
+</beans>

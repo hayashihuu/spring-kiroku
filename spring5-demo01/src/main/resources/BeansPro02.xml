@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--基于构造函数的依赖注入-->
+    <bean id="textEditor" class="com.syun.pro02.TextEditor">
+        <constructor-arg ref="spellChecker"/>
+        <constructor-arg type="java.lang.String" value="syun"/>
+    </bean>
+
+    <!--多值传递-->
+    <bean id="textEditork" class="com.syun.pro02.TextEditor"
+        p:name="syun"
+        p:spellChecker-ref="spellChecker"
+    >
+    </bean>
+
+    <!--内部赋值-->
+    <bean id="textEditork1" class="com.syun.pro02.TextEditor">
+        <property name="spellChecker">
+            <bean class="com.syun.pro02.SpellChecker"/>
+        </property>
+    </bean>
+
+    <bean id="spellChecker" class="com.syun.pro02.SpellChecker">
+
+    </bean>
+
+    <!--对于集合的值注入 -->
+
+    <!-- Definition for javaCollection -->
+    <bean id="javaCollection" class="com.syun.pro02.JavaCollection">
+
+        <!-- results in a setAddressList(java.util.List) call -->
+        <property name="addressList">
+            <list>
+                <value>INDIA</value>
+                <value>Pakistan</value>
+                <value>USA</value>
+                <value>USA</value>
+            </list>
+        </property>
+
+        <!-- results in a setAddressSet(java.util.Set) call -->
+        <property name="addressSet">
+            <set>
+                <value>INDIA</value>
+                <value>Pakistan</value>
+                <value>USA</value>
+                <value>USA</value>
+            </set>
+        </property>
+
+        <!-- results in a setAddressMap(java.util.Map) call -->
+        <property name="addressMap">
+            <map>
+                <entry key="1" value="INDIA"/>
+                <entry key="2" value="Pakistan"/>
+                <entry key="3" value="USA"/>
+                <entry key="4" value="USA"/>
+            </map>
+        </property>
+
+        <!-- results in a setAddressProp(java.util.Properties) call -->
+        <property name="addressProp">
+            <props>
+                <prop key="one">INDIA</prop>
+                <prop key="two">Pakistan</prop>
+                <prop key="three">USA</prop>
+                <prop key="four">USA</prop>
+
+            </props>
+        </property>
+        <!-- <property name="email"><null/></property>-->
+
+    </bean>
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+
+>
+    <!--default-init-method="init"-->
+    <!--default-destroy-method="destroy"-->
+    <!--默认的初始化和销毁方法-->
+
+
+    <!--作用域默认为单例-->
+    <bean id="helloWorld" class="com.syun.pro01.HelloWorld" scope="singleton"
+          init-method="init" destroy-method="destroy">
+        <constructor-arg value="Hello world"/>
+        <property name="message1" value="time"/>
+    </bean>
+
+    <bean class="com.syun.pro01.InitHelloWorld"/>
+
+    <!--定义继承-->
+    <bean id="beanTeamplate" class="com.syun.pro01.BeanTeamplate" abstract="true">
+        <property name="message1" value="hello world"/>
+        <property name="message2" value="hello world world!"/>
+        <property name="message3" value="hello world world world"/>
+    </bean>
+    <!--继承上面抽象类的数据-->
+    <bean id="helloIndia" class="com.syun.pro01.HelloIndia" parent="beanTeamplate">
+        <property name="message1" value="Hello India!"/>
+        <property name="message3" value="Namaste India!"/>
+    </bean>
+
+
+
+
+
+
+</beans>
