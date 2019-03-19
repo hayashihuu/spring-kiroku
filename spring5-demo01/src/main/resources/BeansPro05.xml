@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd"
+>
+
+    <!--使用注解-->
+    <aop:aspectj-autoproxy/>
+
+
+    <!--<aop:config>-->
+        <!--<aop:aspect id="log" ref="logging">-->
+            <!--&lt;!&ndash;切入点&ndash;&gt;-->
+            <!--<aop:pointcut id="selectAll"-->
+                          <!--expression="execution(* com.syun.pro05.*.*(..))"/>-->
+            <!--&lt;!&ndash;在切入点被调用之前&ndash;&gt;-->
+            <!--<aop:before pointcut-ref="selectAll" method="beforeAdvice"/>-->
+            <!--&lt;!&ndash;在切入点被调用时候&ndash;&gt;-->
+            <!--<aop:after pointcut-ref="selectAll" method="afterAdvice"/>-->
+            <!--&lt;!&ndash;在返回值之后&ndash;&gt;-->
+            <!--<aop:after-returning pointcut-ref="selectAll"-->
+                                 <!--returning="retVal"-->
+                                 <!--method="afterReturningAdvice"/>-->
+            <!--<aop:after-throwing pointcut-ref="selectAll"-->
+                                <!--throwing="ex"-->
+                                <!--method="AfterThrowingAdvice"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+    <bean id="student" class="com.syun.pro05.Student">
+        <property name="name" value="syun"/>
+        <property name="age" value="22"/>
+    </bean>
+
+    <!--<bean id="logging" class="com.syun.pro05.Logging"/>-->
+
+    <!-- 使用注解的方式-->
+    <bean id="loggingkai" class="com.syun.pro05.LoggingKai"/>
+
+
+</beans>
