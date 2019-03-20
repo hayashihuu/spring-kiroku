@@ -1,3 +1,9 @@
+POST http://localhost:9070/iam/user/getPermission/username
+
+<> 2019-03-20T072614.500.json
+
+###
+
 GET http://localhost:9060/{GET%20/user/{id}}
 
 ###

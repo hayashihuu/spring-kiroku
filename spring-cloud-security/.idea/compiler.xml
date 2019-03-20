@@ -7,12 +7,25 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="auth" />
-        <module name="gateway" />
+        <module name="gateway-kai" />
         <module name="resource" />
         <module name="server" />
         <module name="spring-cloud-security" />
         <module name="test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gateway" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="gateway-kai" options="-parameters" />
+      <module name="resource" options="-parameters" />
+      <module name="server" options="-parameters" />
+      <module name="test" options="-parameters" />
+    </option>
   </component>
 </project>

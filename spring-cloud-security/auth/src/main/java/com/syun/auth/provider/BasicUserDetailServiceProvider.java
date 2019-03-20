@@ -32,6 +32,7 @@ public class BasicUserDetailServiceProvider implements AuthenticationProvider {
         User user = (User) userDetailsService.loadUserByUsername((String) authentication.getPrincipal());
         String pw = (String) authentication.getCredentials();
         BaseAuthenticationToken authenticationTokenResult = new BaseAuthenticationToken(user.getAuthorities(), user.getUsername());
+
         if (!new BCryptPasswordEncoder().matches(pw, user.getPassword())) {
             log.info("密码错误，username: {}", authentication.getPrincipal());
             try {
