@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: gatewaykai
+  aop:
+    proxyTargetClass: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+      routes:
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
+        - id: resource
+          uri: lb://RESOURCE
+          predicates:
+            - Path=/resource/**
+          filters:
+            - StripPrefix=1
+
+
+
+server:
+  port: 9990
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
