@@ -39,7 +39,7 @@ public class ApiTest {
 
         Flux.generate(sink -> {
             sink.next("hello");
-//            sink.next("world");  不能哟多个产生
+//            sink.next("world");  不能多个产生
             sink.complete();  //  需要产生完成，不然产生一个无限序列
         }).subscribe(System.out::println);
 
