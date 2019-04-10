@@ -36,10 +36,19 @@
         <property name="age" value="22"/>
     </bean>
 
+
+
+
     <!--<bean id="logging" class="com.syun.pro05.Logging"/>-->
 
     <!-- 使用注解的方式-->
     <bean id="loggingkai" class="com.syun.pro05.LoggingKai"/>
 
+<!-- 默认的 Text 值为 Good morning -->
+    <bean name="welcomerBean" class="com.syun.pro06.processor.Welcomer" init-method="initWelcomer">
+        <property name="welcomeText" value="Good morning"/>
+    </bean>
+
+    <bean class="com.syun.pro06.processor.BeanModifier"/>
 
 </beans>
