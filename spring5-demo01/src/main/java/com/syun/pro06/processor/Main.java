@@ -1,5 +1,6 @@
 package com.syun.pro06.processor;
 
+import com.syun.pro06.processorKai.ViewChecker;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,9 +15,13 @@ public class Main {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("BeansPro05.xml");
 
-        Welcomer welcomer = (Welcomer) context.getBean("welcomerBean");
-        System.out.println("Text: " + welcomer.getWelcomeText());
+//        Welcomer welcomer = (Welcomer) context.getBean("welcomerBean");
+//        System.out.println("Text: " + welcomer.getWelcomeText());
+
+//        InitSequenceBean initSequenceBean = (InitSequenceBean) context.getBean("initSequenceBean");
 
 
+        ViewChecker viewChecker = (ViewChecker) context.getBean("viewChecker");
+        viewChecker.get();
     }
 }

@@ -51,4 +51,16 @@
 
     <bean class="com.syun.pro06.processor.BeanModifier"/>
 
+
+    <bean name="initSequenceBean" class="com.syun.pro06.processor.InitSequenceBean" init-method="initMethod"/>
+
+
+    <bean name="beanPostProcessorSample" class="com.syun.pro06.processorKai.BeanPostProcessorSample">
+
+    </bean>
+
+    <bean id="viewChecker" class="com.syun.pro06.processorKai.ViewChecker"/>
+
+
+
 </beans>
