@@ -52,7 +52,7 @@ public class CustomController {
         context.publishEvent(new SampleCustomEvent(context));
         long end = System.currentTimeMillis();
         int testTime = (int)((end - start) / 1000);
-        ((TimeExecutorHolder) context.getBean("timeExecutorHolder")).addNewTime("testController", new Integer(testTime));
+        ((TimeExecutorHolder) context.getBean("timeExecutorHolder")).addNewTime("testController", testTime);
         return "success";
     }
 
