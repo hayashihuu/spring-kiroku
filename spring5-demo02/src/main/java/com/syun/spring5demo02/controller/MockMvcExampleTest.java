@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
@@ -32,7 +32,7 @@ public class MockMvcExampleTest {
     @Autowired
     private WebApplicationContext wac;
 
-    
+
     @Test
         public void test() throws Exception {
 
@@ -45,8 +45,8 @@ public class MockMvcExampleTest {
         System.out.println("eventSec: " + eventSec);
 
 
-        assertTrue("Listener for SampleCustomEvent should take 5 seconds before treating the request but it took "+eventSec+" instead",  eventSec == 5);
-        assertTrue("Because listener took 5 seconds to response, controller should also take 5 seconds before generating the view, but it took "+controllerSec+ " instead", controllerSec == 5);
+        assertEquals("Listener for SampleCustomEvent should take 5 seconds before treating the request but it took " + eventSec + " instead", 5, eventSec);
+        assertEquals("Because listener took 5 seconds to response, controller should also take 5 seconds before generating the view, but it took " + controllerSec + " instead", 5, controllerSec);
 
     }
 

@@ -1,5 +1,6 @@
 package com.syun.spring5demo02.controller;
 
+import com.syun.spring5demo02.common.ApplicationContextProvider;
 import com.syun.spring5demo02.event.OtherCustomEvent;
 import com.syun.spring5demo02.event.SampleCustomEvent;
 import com.syun.spring5demo02.interceptor.LotteryInterceptor;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,6 +64,21 @@ public class CustomController {
     public String testOtherEvent() {
 //        发送时间
         context.publishEvent(new OtherCustomEvent(context));
+        return "success";
+    }
+
+
+    @GetMapping("/getContext")
+    @ResponseBody
+    public String getContext(){
+        ApplicationContext context = ApplicationContextProvider.getContext();
+
+        if (this.context.equals(context)) {
+            log.info("ApplicationContext is same ");
+        }else {
+            log.info("ApplicationContext is not same");
+        }
+
         return "success";
     }
 
