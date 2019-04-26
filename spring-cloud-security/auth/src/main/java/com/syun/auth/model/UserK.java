@@ -25,9 +25,4 @@ public class UserK {
 
     private Set<Permission> permissions;
 
-
-
-
-
-
 }

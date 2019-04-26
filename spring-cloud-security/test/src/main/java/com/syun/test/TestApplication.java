@@ -16,11 +16,9 @@ public class TestApplication {
     }
 
 
-    @PostMapping("/hello")
-    public String hello(@RequestParam("name") String name) {
-        System.out.println(name);
-        return "hello" + name;
-    }
+
+
+
 
 }
 

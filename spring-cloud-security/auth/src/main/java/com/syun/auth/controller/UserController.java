@@ -24,7 +24,6 @@ public class UserController {
     @PostMapping("/testPost")
     public String test(HttpServletRequest request) {
         System.out.println(request.getHeaderNames());
-
         return "testPost";
     }
 }

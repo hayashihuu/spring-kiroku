@@ -1,6 +1,5 @@
 package com.syun.resource.config;
 
-import com.syun.resource.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -11,13 +10,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
- * @description:
+ * @description: OAuth2AuthenticationProcessingFilter 获取传入参数的 access_token
+ * 向 auth 确认信息
  * @program: spring-cloud-security
  * @author: syun
  * @create: 2018-12-16 19:38
@@ -56,9 +52,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //        }
         http.authorizeRequests().anyRequest().authenticated();
 
-//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        HttpServletRequest request = requestAttributes.getRequest();
-//
         registry.anyRequest()
                 .access("@permissionService.hasPermissionService(request,authentication)");
     }

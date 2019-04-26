@@ -1,7 +1,5 @@
 package com.syun.auth.config;
 
-import com.syun.auth.filter.BaseUserAutheniticationFilter;
-import com.syun.auth.handler.LoginAuthSuccessHandler;
 import com.syun.auth.provider.BasicUserDetailServiceProvider;
 import com.syun.auth.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @description:
@@ -66,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().fullyAuthenticated()
-                .antMatchers("/oauth/token", "/oauth/authorize").permitAll()
+                .antMatchers("/oauth/token", "/oauth/authorize","/actuator/health").permitAll()
                 .and()
                 .csrf().disable();
     }

@@ -36,33 +36,29 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private BasicUserDetailServiceProvider provider;
+    private final BasicUserDetailServiceProvider provider;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
 //    @Autowired
 //    private DataSource dataSource;
 
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private final RedisConnectionFactory redisConnectionFactory;
 
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, BasicUserDetailServiceProvider provider, UserDetailsServiceImpl userDetailsService, RedisConnectionFactory redisConnectionFactory) {
+        this.authenticationManager = authenticationManager;
+        this.provider = provider;
+        this.userDetailsService = userDetailsService;
+        this.redisConnectionFactory = redisConnectionFactory;
+    }
 
 
     @Bean
     RedisTokenStore redisTokenStore() {
         return new RedisTokenStore(redisConnectionFactory);
     }
-
-
-//    @Bean
-//    public ClientDetailsService clientDetails() {
-//        return new JdbcClientDetailsService(dataSource);
-//    }
 
 
     @Override
@@ -83,10 +79,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
         endpoints
-//                .tokenStore(redisTokenStore())
-//                .userDetailsService(userDetailsService)
-
-                .authenticationManager(authentication -> provider.authenticate(authentication));
+                .authenticationManager(provider::authenticate);
         endpoints.tokenServices(defaultTokenServices());
         endpoints.exceptionTranslator(webResponseExceptionTranslator());//认证异常翻译
     }

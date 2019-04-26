@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="test" />
+        <module name="resource" />
         <module name="auth" />
         <module name="gateway-kai" />
-        <module name="resource" />
         <module name="server" />
         <module name="spring-cloud-security" />
-        <module name="test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -1,10 +1,14 @@
 package com.syun.auth.feign;
 
+import com.syun.auth.domain.dto.IamUserDTO;
 import com.syun.auth.model.UserDO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @description:
@@ -16,11 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/iam/user")
 public interface IamFeignService {
 
-    @GetMapping("/{id}")
-    UserDO getUserById(@PathVariable("id") Integer id);
-
-    @GetMapping("/getUserPermission/{id}")
-    UserDO getUserPermission(@PathVariable("id") Integer id);
-
+    @GetMapping("/getInfoByUsername/{username}")
+    ResponseEntity<IamUserDTO> getUserByUsername(@PathVariable("username") @NotNull String username);
 
 }

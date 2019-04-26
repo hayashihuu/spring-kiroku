@@ -11,8 +11,8 @@
     <modules>
         <module>auth</module>
         <module>server</module>
-        <module>gateway</module>
         <module>resource</module>
+        <module>gateway-kai</module>
     </modules>
 
 </project>
