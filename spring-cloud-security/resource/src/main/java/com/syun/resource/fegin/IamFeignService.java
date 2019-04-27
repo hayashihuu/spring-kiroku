@@ -1,11 +1,13 @@
 package com.syun.resource.fegin;
 
+import com.syun.auth.domain.dto.IamUserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 /**
  * @program: spring-cloud-security
@@ -16,8 +18,9 @@ import java.util.List;
 @RequestMapping("/iam/user")
 public interface IamFeignService {
 
-    @PostMapping("/getPermission/username")
-    List<String> getUserPermissionByUsername(@RequestParam("username") String username);
+
+    @GetMapping("/getInfoByUsername/{username}")
+    ResponseEntity<IamUserDTO> getUserByUsername(@PathVariable("username") @NotNull String username);
 
 
 }

@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PermissionService {
 
+    /**
+     * 用以匹配权限资源
+     * @param request
+     * @param authentication
+     * @return
+     */
     boolean hasPermissionService(HttpServletRequest request, Authentication authentication);
 
 }

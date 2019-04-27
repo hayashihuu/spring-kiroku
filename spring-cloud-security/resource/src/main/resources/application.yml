@@ -1,8 +1,14 @@
 server:
   port: 9070
+  servlet:
+    context-path: /resources
 spring:
   application:
     name: resource
+  datasource:
+    url: jdbc:mysql://112.74.57.253:3306/iam
+    username: root
+    password: 594682797
 eureka:
   instance:
     prefer-ip-address: true
@@ -11,7 +17,7 @@ eureka:
     lease-expiration-duration-in-seconds: 10
   client:
     service-url:
-      defaultZone: http://localhost:8000/eureka/
+      defaultZone: http://112.74.57.253:8000/eureka/
 security:
   oauth2:
     resource:

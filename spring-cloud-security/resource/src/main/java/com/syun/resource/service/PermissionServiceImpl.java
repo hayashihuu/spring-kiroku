@@ -1,14 +1,19 @@
 package com.syun.resource.service;
 
+import com.syun.auth.domain.dto.IamRoleDTO;
+import com.syun.auth.domain.dto.IamUserDTO;
+import com.syun.auth.model.IamPermission;
 import com.syun.resource.fegin.IamFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -19,11 +24,14 @@ import java.util.List;
 @Service("permissionService")
 public class PermissionServiceImpl implements PermissionService {
 
-    @Autowired(required = false)
-    private IamFeignService iamFeignService;
+    private final IamFeignService iamFeignService;
 
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    public PermissionServiceImpl(IamFeignService iamFeignService) {
+        this.iamFeignService = iamFeignService;
+    }
 
 
     @Override
@@ -34,42 +42,28 @@ public class PermissionServiceImpl implements PermissionService {
         List<SimpleGrantedAuthority> grantedAuthorities = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
 
         boolean hasPremission = false;
+//      获取用户所有的可访问资源
+        Set<IamPermission> permissions = Optional.ofNullable(iamFeignService.getUserByUsername(authentication.getPrincipal().toString()))
+                .map(HttpEntity::getBody)
+                .map(IamUserDTO::getRoles)
+                .filter(p -> !p.isEmpty())
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(IamRoleDTO::getPermissions)
+                .reduce((p, q) -> {
+                    q.addAll(p);
+                    return q;
+                }).orElse(null);
 
-
-        System.out.println(authentication.getPrincipal());
-        System.out.println(authentication.getName());
-
-        List<String> urls = null;
-//        iamFeignService.getUserPermissionByUsername("hayashihuu");
-
+//        请求的 url
         String requestUrl = request.getRequestURL().toString();
-
-//        for (String url : urls) {
-//            System.out.println(url);
-//            if (url.equals(requestUrl)) {
-//                hasPremission = true;
-//                break;
-//            }
-//        }
-
-//        for (SimpleGrantedAuthority grantedAuthority : grantedAuthorities) {
-//            System.out.println(grantedAuthority.toString());
-//            if("ROLE_syun".equals(grantedAuthority.toString())){
-//                hasPremission = true;
-//                break;
-//            }
-//            if(antPathMatcher.match("http://localhost:9070/test/test", request.getRequestURL().toString())){
-//                hasPremission = true;
-//                break;
-//            }
-//        }
-
-
-        if(authentication.getPrincipal().equals("syun")&&authentication.getName().equals("syun")){
-            return true;
-        }
-
-        return false;
+//       检测是否拥有权限
+        hasPremission = Optional.ofNullable(permissions)
+                .orElse(Collections.emptySet())
+                .stream()
+                .anyMatch(p -> requestUrl.endsWith(p.getUrl()));
+ 
+        return hasPremission;
 
     }
 }
