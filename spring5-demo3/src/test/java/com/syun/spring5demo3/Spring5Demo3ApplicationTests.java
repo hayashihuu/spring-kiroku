@@ -1,4 +1,4 @@
-package com.syun.test;
+package com.syun.spring5demo3;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,11 +7,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestApplicationTests {
+public class Spring5Demo3ApplicationTests {
 
     @Test
     public void contextLoads() {
     }
 
 }
-
