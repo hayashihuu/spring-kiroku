@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 
 /*
@@ -19,7 +20,8 @@ public class Bean1 {
     @Qualifier("list")
     private ArrayList arrayList;
 
-
+    @Resource(name = "list")
+    private ArrayList arrayList1;
 
 
 

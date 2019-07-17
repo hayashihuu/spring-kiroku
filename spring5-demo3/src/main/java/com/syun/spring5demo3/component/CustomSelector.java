@@ -12,6 +12,8 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
+import java.util.concurrent.CountDownLatch;
+
 /*
  * @description:
  * @program: spring5-demo3
@@ -27,11 +29,13 @@ public class CustomSelector implements ImportSelector, BeanFactoryAware{
         log.info("set beanFactory");
     }
 
+//    导入配置类
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         String test = Bean2.class.getName();
         System.out.println(test);
         return new String[]{test};
+        
     }
 
 
